@@ -730,7 +730,7 @@ AnimatedContainer(
                               ),
                             ],
                           )
-                        : null,
+                        : const SizedBox(),
                   ),
 
                   // MUSICA

@@ -376,16 +376,21 @@ Aleluia aleluia
       ),
     );
   }
+  
+        bool ehLinhaDeAcordes(String linha) {
+          if (linha.trim().isEmpty) return false;
 
-  bool ehLinhaDeAcordes(String linha) {
-    if (linha.trim().isEmpty) return false;
+          final acordes = linha.trim().split(RegExp(r'\s+'));
 
-    final acordes = linha.trim().split(RegExp(r'\s+'));
+          final regexAcorde = RegExp(
+            r'^[A-G](#|b)?(m|maj|min|sus|dim|aug|add)?[0-9°+\-/()]*$'
+          );
 
-    return acordes.every((item) =>
-        RegExp(r'^#|b?(m|maj|min|sus|dim|aug|add)?[0-9°+\-/()]*$')
-            .hasMatch(item));
-  }
+          // precisa ter pelo menos 2 acordes válidos
+          int validos = acordes.where((a) => regexAcorde.hasMatch(a)).length;
+
+          return validos >= 2;
+        }
 
   Widget renderizarLinha(String linha) {
     if (linha.trim().isEmpty) {
@@ -402,7 +407,7 @@ Aleluia aleluia
         height: ehCifra ? 1.0 : 1.2,
         color: ehCifra
             ? (widget.modoEscuro ? Colors.amber : Colors.blue)
-            : (widget.modoEscuro ? Colors.white70 : Colors.black),
+            : (widget.modoEscuro ? Colors.white : Colors.black),
         fontWeight: ehCifra ? FontWeight.w600 : FontWeight.normal,
       ),
     );

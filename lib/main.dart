@@ -22,7 +22,7 @@ class _CatCifraAppState extends State<CatCifraApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'CatCifra',
+      title: 'SacraCifra',
       theme: modoEscuro ? ThemeData.dark() : ThemeData.light(),
       home: const SplashScreen(),
 
@@ -514,7 +514,7 @@ AnimatedContainer(
                   Image.asset("assets/logo.png", height: 26),
                   const SizedBox(width: 6),
                   const Text(
-                    "CatCifra",
+                    "SacraCifra",
                     style: TextStyle(
                       fontFamily: "Garet",
                       fontSize: 16,
@@ -596,7 +596,7 @@ AnimatedContainer(
               ),
             ),
           ],
-        )
+          )
       : null,
 ),
 

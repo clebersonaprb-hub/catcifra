@@ -24,14 +24,8 @@ class _CatCifraAppState extends State<CatCifraApp> {
       debugShowCheckedModeBanner: false,
       title: 'CatCifra',
       theme: modoEscuro ? ThemeData.dark() : ThemeData.light(),
-      home: HomePage(
-        modoEscuro: modoEscuro,
-        onToggleTheme: () {
-          setState(() {
-            modoEscuro = !modoEscuro;
-          });
-        },
-      ),
+      home: const SplashScreen(),
+
     );
   }
 }
@@ -433,193 +427,178 @@ final listaBase = modoCatalogo
     return Scaffold(
       body: SafeArea(
         child: Column(
-          children: [
+              children: [
             Expanded(
               child: Row(
                 children: [
-                  // ================= SIDEBAR =================
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 250),
-                    width: sidebarAberta ? 180 : 0,
-                    color: const Color(0xFF181818),
-                    child: sidebarAberta
-                        ? Column(
-                            children: [
-                              // MENU
-                              Container(
-                                height: 26,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 6),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        IconButton(
-                                          icon: const Icon(Icons.add,
-                                              size: 18, color: Colors.white),
-                                          onPressed: () {
-                                            // SE ESTIVER NO CATÁLOGO
-                                            if (modoCatalogo) {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      OpcoesInsercaoPage(
-                                                    onImportarTxt: importarTxt,
-                                                    onImportarBackup:
-                                                        importarBackupTxt,
-                                                    onAdicionarManual:
-                                                        (musica) {
-                                                      setState(() {
-                                                        todasMusicas
-                                                            .add(musica);
-                                                        musicaSelecionada =
-                                                            musica;
-                                                      });
-                                                    },
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                            // SE ESTIVER NA PLAYLIST
-                                            else {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SelecionarMusicaPage(
-                                                    todasMusicas: todasMusicas,
-                                                    onSelecionar: (musica) {
-                                                      setState(() {
-                                                        playlistAtual.musicas
-                                                            .add(musica);
-                                                      });
-                                                    },
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                          },
-                                        ),
-                                        IconButton(
-                                          icon: const Icon(Icons.label,
-                                              size: 18, color: Colors.white),
-                                          onPressed: () {},
-                                        ),
-                                      ],
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(Icons.queue_music,
-                                          size: 18, color: Colors.white),
-                                      onPressed: () {},
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                              // HEADER
-                              Container(
-                                height: 34,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                alignment: Alignment.centerLeft,
-                                child: Row(
-                                  children: [
-                                    Image.asset("assets/logo.png", height: 20),
-                                    const SizedBox(width: 6),
-                                    const Text(
-                                      "CatCifra",
-                                      style: TextStyle(
-                                        fontFamily: "Garet",
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 4),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      modoCatalogo
-                                          ? "Todas"
-                                          : playlistAtual.nome,
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white70,
-                                      ),
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(Icons.swap_horiz,
-                                          size: 16, color: Colors.white70),
-                                      onPressed: () {
-                                        setState(() {
-                                          modoCatalogo = !modoCatalogo;
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                              // BUSCA
-                              Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: TextField(
-                                 
-                                  onChanged: (value) {
+                 // ================= SIDEBAR =================
+AnimatedContainer(
+  duration: const Duration(milliseconds: 250),
+  width: sidebarAberta ? 180 : 0,
+  color: const Color(0xFF181818),
+  child: sidebarAberta
+      ? Column(
+          children: [
+            // MENU
+            Container(
+              height: 26,
+              padding: const EdgeInsets.symmetric(horizontal: 6),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.add,
+                            size: 18, color: Colors.white),
+                        onPressed: () {
+                          if (modoCatalogo) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => OpcoesInsercaoPage(
+                                  onImportarTxt: importarTxt,
+                                  onImportarBackup:
+                                      importarBackupTxt,
+                                  onAdicionarManual: (musica) {
                                     setState(() {
-                                      busca = value;
+                                      todasMusicas.add(musica);
+                                      musicaSelecionada = musica;
                                     });
                                   },
-
-                                  style: const TextStyle(
-                                    color: Colors.white, // ✅ texto digitado
-                                    fontSize: 11,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: "Buscar...",
-                                    hintStyle: const TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.white54,
-                                    ),
-
-                                    prefixIcon: const Icon(
-                                      Icons.search,
-                                      size: 16,
-                                      color: Colors.white54,
-                                    ),
-
-                                    isDense: true,
-                                    contentPadding:
-                                        const EdgeInsets.symmetric(vertical: 2),
-
-                                    constraints: const BoxConstraints(
-                                      minHeight: 30,
-                                      maxHeight: 30,
-                                    ),
-
-                                    filled: true,
-                                    fillColor:
-                                        const Color(0xFF2A2A2A), // ✅ FIXO
-
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
                                 ),
                               ),
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    SelecionarMusicaPage(
+                                  todasMusicas: todasMusicas,
+                                  onSelecionar: (musica) {
+                                    setState(() {
+                                      playlistAtual.musicas
+                                          .add(musica);
+                                    });
+                                  },
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.label,
+                            size: 18, color: Colors.white),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.queue_music,
+                        size: 18, color: Colors.white),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ),
+
+            // HEADER
+            Container(
+              height: 34,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              alignment: Alignment.centerLeft,
+              child: Row(
+                children: [
+                  Image.asset("assets/logo.png", height: 26),
+                  const SizedBox(width: 6),
+                  const Text(
+                    "CatCifra",
+                    style: TextStyle(
+                      fontFamily: "Garet",
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 16, vertical: 4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    modoCatalogo
+                        ? "Todas"
+                        : playlistAtual.nome,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white70,
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.swap_horiz,
+                        size: 16, color: Colors.white70),
+                    onPressed: () {
+                      setState(() {
+                        modoCatalogo = !modoCatalogo;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+
+            // BUSCA
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: TextField(
+                onChanged: (value) {
+                  setState(() {
+                    busca = value;
+                  });
+                },
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 11,
+                ),
+                decoration: InputDecoration(
+                  hintText: "Buscar...",
+                  hintStyle: const TextStyle(
+                    fontSize: 10,
+                    color: Colors.white54,
+                  ),
+                  prefixIcon: const Icon(
+                    Icons.search,
+                    size: 16,
+                    color: Colors.white54,
+                  ),
+                  isDense: true,
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 2),
+                  constraints: const BoxConstraints(
+                    minHeight: 30,
+                    maxHeight: 30,
+                  ),
+                  filled: true,
+                  fillColor: const Color(0xFF2A2A2A),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )
+      : null,
+),
 
 // ✅ LISTA SIDEBAR GERAL (SEM ListTile)
                               Expanded(
@@ -755,24 +734,23 @@ final listaBase = modoCatalogo
                   ),
 
                   // MUSICA
-                  Expanded(
-                  child: Container(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: SingleChildScrollView(
-                        padding: const EdgeInsets.fromLTRB(12, 24, 16, 16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: (musicaSelecionada?.conteudo ?? "")
-                              .split("\n")
-                              .map(renderizarLinha)
-                              .toList(),
-        ),
-      ),
-    ),
-  ),
-),
+                  
+          Expanded(
+            child: Container(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(12, 16, 16, 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: (musicaSelecionada?.conteudo ?? "")
+                      .split("\n")
+                      .map(renderizarLinha)
+                      .toList(),
+                ),
+              ),
+            ),
+          ),
+
 
             // BARRA
             Container(

@@ -585,7 +585,7 @@ final listaBase = modoCatalogo
 
                                   style: const TextStyle(
                                     color: Colors.white, // ✅ texto digitado
-                                    fontSize: 10,
+                                    fontSize: 11,
                                   ),
                                   decoration: InputDecoration(
                                     hintText: "Buscar...",
@@ -686,7 +686,7 @@ final listaBase = modoCatalogo
                                                 overflow: TextOverflow.ellipsis,
                                                 style: const TextStyle(
                                                   color: Colors.white,
-                                                  fontSize: 10,
+                                                  fontSize: 12,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                               ),
@@ -696,7 +696,7 @@ final listaBase = modoCatalogo
                                                 overflow: TextOverflow.ellipsis,
                                                 style: const TextStyle(
                                                   color: Colors.white54,
-                                                  fontSize: 8,
+                                                  fontSize: 10,
                                                 ),
                                               ),
                                               trailing:
@@ -758,8 +758,12 @@ final listaBase = modoCatalogo
                   Expanded(
                     child: Container(
                       color: Theme.of(context).scaffoldBackgroundColor,
-                      child: SingleChildScrollView(
-                        padding: const EdgeInsets.fromLTRB(12, 16, 16, 16),
+                      
+child: Align(
+  alignment: Alignment.topLeft,
+  child: SingleChildScrollView(
+    padding: const EdgeInsets.fromLTRB(12, 24, 16, 16),
+
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: (musicaSelecionada?.conteudo ?? "")
@@ -773,6 +777,8 @@ final listaBase = modoCatalogo
                 ],
               ),
             ),
+        ),
+      ),
 
             // BARRA
             Container(
@@ -792,12 +798,41 @@ final listaBase = modoCatalogo
                     },
                   ),
 
-                  // ✏️ EDITAR
+                  // ✏️ BOTAO EDITAR
                   botaoControl(
-                    child:
-                        const Icon(Icons.edit, size: 20, color: Colors.white),
-                    onTap: () {},
-                  ),
+                    child: const Icon(Icons.edit, size: 20, color: Colors.white),
+                    onTap: () async {
+                      if (musicaSelecionada == null) return;
+
+                      final musicaEditada = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditarMusicaPage(
+                            musica: musicaSelecionada,
+                          ),
+                        ),
+                      );
+
+                      if (musicaEditada != null) {
+                        setState(() {
+                          // atualiza a música na lista principal
+                          final index = todasMusicas.indexOf(musicaSelecionada!);
+                          if (index != -1) {
+                            todasMusicas[index] = musicaEditada;
+                          }
+
+                          // atualiza também na playlist atual
+                          final indexPlaylist =
+                              playlistAtual.musicas.indexOf(musicaSelecionada!);
+                          if (indexPlaylist != -1) {
+                            playlistAtual.musicas[indexPlaylist] = musicaEditada;
+                          }
+
+                          musicaSelecionada = musicaEditada;
+      });
+    }
+  },
+),
 
                   // A-
                   botaoControl(

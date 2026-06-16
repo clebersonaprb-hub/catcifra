@@ -597,7 +597,7 @@ AnimatedContainer(
             ),
           ],
           )
-      : null,
+      : SizedBox(),
 ),
 
 // ✅ LISTA SIDEBAR GERAL (SEM ListTile)

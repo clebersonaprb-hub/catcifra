@@ -756,29 +756,23 @@ final listaBase = modoCatalogo
 
                   // MUSICA
                   Expanded(
-                    child: Container(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      
-child: Align(
-  alignment: Alignment.topLeft,
-  child: SingleChildScrollView(
-    padding: const EdgeInsets.fromLTRB(12, 24, 16, 16),
-
+                  child: Container(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.fromLTRB(12, 24, 16, 16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: (musicaSelecionada?.conteudo ?? "")
                               .split("\n")
                               .map(renderizarLinha)
                               .toList(),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
         ),
       ),
+    ),
+  ),
+),
 
             // BARRA
             Container(
